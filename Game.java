@@ -19,7 +19,7 @@ public class Game
 {
     private Parser parser;
     private Room currentRoom;
-        
+
     /**
      * Create the game and initialise its internal map.
      */
@@ -34,23 +34,25 @@ public class Game
      */
     private void createRooms()
     {
-        Room outside, theater, pub, lab, office;
-      
-        // create the rooms
-        outside = new Room("outside the main entrance of the university");
-        theater = new Room("in a lecture theater");
-        pub = new Room("in the campus pub");
-        lab = new Room("in a computing lab");
-        office = new Room("in the computing admin office");
-        
-        // initialise room exits
-        outside.setExits(null, theater, lab, pub);
-        theater.setExits(null, null, null, outside);
-        pub.setExits(null, outside, null, null);
-        lab.setExits(outside, office, null, null);
-        office.setExits(null, null, null, lab);
+        Room circulo,oeste,este,norte,sur,freedom;
 
-        currentRoom = outside;  // start game outside
+        // create the rooms
+        circulo = new Room("sala circular romana con puertas");
+        oeste = new Room("sala oeste");
+        este = new Room("sala este");
+        norte = new Room("sala norte");
+        sur = new Room("sala sur");
+        freedom = new Room("sala libertad");
+
+        // initialise room exits
+        circulo.setExits(norte,este,sur,oeste);
+        oeste.setExits(null, circulo, null,freedom);
+        este.setExits(null, null, null, circulo);
+        norte.setExits( null,null, circulo, null);
+        sur.setExits( circulo, null,null,null);
+        
+
+        currentRoom = circulo;  // start game outside
     }
 
     /**
@@ -62,7 +64,7 @@ public class Game
 
         // Enter the main command loop.  Here we repeatedly read commands and
         // execute them until the game is over.
-                
+
         boolean finished = false;
         while (! finished) {
             Command command = parser.getCommand();
