@@ -38,19 +38,18 @@ public class Game
 
         // create the rooms
         circulo = new Room("sala circular romana con puertas");
-        oeste = new Room("sala oeste");
-        este = new Room("sala este");
-        norte = new Room("sala norte");
-        sur = new Room("sala sur");
-        freedom = new Room("sala libertad");
+        oeste = new Room("sala oeste,hay un leon");
+        este = new Room("sala este,con refrigerio");
+        norte = new Room("sala norte,sala con fuego");
+        sur = new Room("sala sur , hay una espada");
+        freedom = new Room("sala libertad,has derrotado al leon y eres LIBRE");
 
         // initialise room exits
-        circulo.setExits(norte,este,sur,oeste);
-        oeste.setExits(null, circulo, null,freedom);
-        este.setExits(null, null, null, circulo);
-        norte.setExits( null,null, circulo, null);
-        sur.setExits( circulo, null,null,null);
-        
+        circulo.setExits(norte,este,sur,oeste,null);
+        oeste.setExits(null, circulo, null,freedom,sur);
+        este.setExits(null, null, null, circulo,null);
+        norte.setExits( null,null, circulo, null,null);
+        sur.setExits( circulo, null,null,null,null);
 
         currentRoom = circulo;  // start game outside
     }
@@ -84,7 +83,7 @@ public class Game
         System.out.println("Type 'help' if you need help.");
         System.out.println();
         printLocationInfo();
-        
+
         System.out.println();
     }
 
@@ -160,14 +159,18 @@ public class Game
         if(direction.equals("west")) {
             nextRoom = currentRoom.westExit;
         }
+        if (direction.equals("southeast"))
+        {
+            nextRoom = currentRoom.southEastExit;
+        }
 
         if (nextRoom == null) {
             System.out.println("There is no door!");
         }
         else {
             currentRoom = nextRoom;
-             printLocationInfo();
-            
+            printLocationInfo();
+
             System.out.println();
         }
     }
@@ -187,24 +190,28 @@ public class Game
             return true;  // signal that we want to quit
         }
     }
-   /**
-    * metodo para evitar la repeticion de codigo
-    */
-   private void printLocationInfo()
-   {
-       System.out.println("You are " + currentRoom.getDescription());
-            System.out.print("Exits: ");
-            if(currentRoom.northExit != null) {
-                System.out.print("north ");
-            }
-            if(currentRoom.eastExit != null) {
-                System.out.print("east ");
-            }
-            if(currentRoom.southExit != null) {
-                System.out.print("south ");
-            }
-            if(currentRoom.westExit != null) {
-                System.out.print("west ");
-            }
-   }
+
+    /**
+     * metodo para evitar la repeticion de codigo
+     */
+    private void printLocationInfo()
+    {
+        System.out.println("You are " + currentRoom.getDescription());
+        System.out.print("Exits: ");
+        if(currentRoom.northExit != null) {
+            System.out.print("north ");
+        }
+        if(currentRoom.eastExit != null) {
+            System.out.print("east ");
+        }
+        if(currentRoom.southExit != null) {
+            System.out.print("south ");
+        }
+        if(currentRoom.westExit != null) {
+            System.out.print("west ");
+        }
+        if(currentRoom.southEastExit != null) {
+            System.out.print("southeast ");
+        }
+    }
 }
