@@ -14,12 +14,12 @@
  */
 public class Room 
 {
-    public String description;
-    public Room northExit;
-    public Room southExit;
-    public Room eastExit;
-    public Room westExit;
-    public Room southEastExit;
+    private String description;
+    private Room northExit;
+    private Room southExit;
+    private Room eastExit;
+    private Room westExit;
+    private Room southEastExit;
 
     /**
      * Create a room described "description". Initially, it has
@@ -52,7 +52,7 @@ public class Room
             westExit = west;
         if(southEast !=null)
             southEastExit = southEast; 
-            
+
     }
 
     /**
@@ -63,4 +63,59 @@ public class Room
         return description;
     }
 
+    /**
+     * que tome como parámetro una cadena que represente una dirección 
+     * y devuelva el objeto de la clase Room asociado a esa salida o null si no hay salida.
+     */ 
+    public Room getExit(String direccion)
+    {
+        Room salida = null;
+        if(direccion.equals("north")) {
+            salida = northExit;
+        }
+        if(direccion.equals("east")) {
+            salida = eastExit;
+        }
+        if(direccion.equals("south")) {
+            salida = southExit;
+        }
+        if(direccion.equals("west")) {
+            salida = westExit;
+        }
+        if (direccion.equals("southeast"))
+        {
+            salida = southEastExit;
+        }
+
+        return salida;
+
+    }
+
+    /**
+     * Return a description of the room's exits.
+     * For example: "Exits: north east west"
+     *
+     * @ return A description of the available exits.
+     */
+    public String getExitString()
+    {
+        String description = "";
+        if(getExit("north") != null) {
+            description += "north ";
+        }
+        if(getExit("east") != null) {
+            description +="east ";
+        }
+        if(getExit("south") != null) {
+            description +="south ";
+        }
+        if(getExit("west")!= null) {
+            description += "west ";
+        }
+        if(getExit("southeast") != null) {
+            description +="southeast ";
+        }
+        return description;
+    }
+  
 }

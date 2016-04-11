@@ -42,7 +42,7 @@ public class Game
         este = new Room("sala este,con refrigerio");
         norte = new Room("sala norte,sala con fuego");
         sur = new Room("sala sur , hay una espada");
-        freedom = new Room("sala libertad,has derrotado al leon y eres LIBRE");
+        freedom = new Room("sala libertad,has derrotado al leon y eres LIBR");
 
         // initialise room exits
         circulo.setExits(norte,este,sur,oeste,null);
@@ -147,23 +147,7 @@ public class Game
 
         // Try to leave current room.
         Room nextRoom = null;
-        if(direction.equals("north")) {
-            nextRoom = currentRoom.northExit;
-        }
-        if(direction.equals("east")) {
-            nextRoom = currentRoom.eastExit;
-        }
-        if(direction.equals("south")) {
-            nextRoom = currentRoom.southExit;
-        }
-        if(direction.equals("west")) {
-            nextRoom = currentRoom.westExit;
-        }
-        if (direction.equals("southeast"))
-        {
-            nextRoom = currentRoom.southEastExit;
-        }
-
+        nextRoom = currentRoom.getExit(direction);
         if (nextRoom == null) {
             System.out.println("There is no door!");
         }
@@ -198,20 +182,21 @@ public class Game
     {
         System.out.println("You are " + currentRoom.getDescription());
         System.out.print("Exits: ");
-        if(currentRoom.northExit != null) {
+        if(currentRoom.getExit("north") != null) {
             System.out.print("north ");
         }
-        if(currentRoom.eastExit != null) {
+        if(currentRoom.getExit("east") != null) {
             System.out.print("east ");
         }
-        if(currentRoom.southExit != null) {
+        if(currentRoom.getExit("south") != null) {
             System.out.print("south ");
         }
-        if(currentRoom.westExit != null) {
+        if(currentRoom.getExit("west")!= null) {
             System.out.print("west ");
         }
-        if(currentRoom.southEastExit != null) {
+        if(currentRoom.getExit("southeast") != null) {
             System.out.print("southeast ");
         }
+
     }
 }
