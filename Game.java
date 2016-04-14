@@ -49,15 +49,15 @@ public class Game
         circulo.setExit("east",este);
         circulo.setExit("south",sur);
         circulo.setExit("west",oeste);
-        
+
         oeste.setExit("west",circulo);
         oeste.setExit("southeast",freedom);
         oeste.setExit("south",sur);
 
         este.setExit("west",circulo);
-        
+
         norte.setExit("south",circulo);
-        
+
         sur.setExit( "north",circulo);
 
         currentRoom = circulo;  // start game outside
@@ -189,23 +189,6 @@ public class Game
      */
     private void printLocationInfo()
     {
-        System.out.println("You are " + currentRoom.getDescription());
-        System.out.print("Exits: ");
-        if(currentRoom.getExit("north") != null) {
-            System.out.print("north ");
-        }
-        if(currentRoom.getExit("east") != null) {
-            System.out.print("east ");
-        }
-        if(currentRoom.getExit("south") != null) {
-            System.out.print("south ");
-        }
-        if(currentRoom.getExit("west")!= null) {
-            System.out.print("west ");
-        }
-        if(currentRoom.getExit("southeast") != null) {
-            System.out.print("southeast ");
-        }
-
+        System.out.println (currentRoom.getLongDescription());
     }
 }
