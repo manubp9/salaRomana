@@ -45,11 +45,20 @@ public class Game
         freedom = new Room("sala libertad,has derrotado al leon y eres LIBR");
 
         // initialise room exits
-        circulo.setExits(norte,este,sur,oeste,null);
-        oeste.setExits(null, circulo, null,freedom,sur);
-        este.setExits(null, null, null, circulo,null);
-        norte.setExits( null,null, circulo, null,null);
-        sur.setExits( circulo, null,null,null,null);
+        circulo.setExit("north",norte);
+        circulo.setExit("east",este);
+        circulo.setExit("south",sur);
+        circulo.setExit("west",oeste);
+        
+        oeste.setExit("west",circulo);
+        oeste.setExit("southeast",freedom);
+        oeste.setExit("south",sur);
+
+        este.setExit("west",circulo);
+        
+        norte.setExit("south",circulo);
+        
+        sur.setExit( "north",circulo);
 
         currentRoom = circulo;  // start game outside
     }

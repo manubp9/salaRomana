@@ -35,31 +35,13 @@ public class Room
     }
 
     /**
-     * Define the exits of this room.  Every direction either leads
-     * to another room or is null (no exit there).
-     * @param north The north exit.
-     * @param east The east east.
-     * @param south The south exit.
-     * @param west The west exit.
+     * Define an exit from this room.
+     * @param direction The direction of the exit.
+     * @param neighbor The room in the given direction.
      */
-    public void setExits(Room north, Room east, Room south, Room west,Room southEast) 
+    public void setExit(String direction, Room neighbor) 
     {
-        if(north != null)
-            northExit = north;
-        exits.put("north",northExit);
-        if(east != null)
-            eastExit = east;
-        exits.put("east",eastExit);
-        if(south != null)
-            southExit = south;
-        exits.put("south",southExit);
-        if(west != null)
-            westExit = west;
-        exits.put("west",westExit);
-        if(southEast !=null)
-            southEastExit = southEast; 
-        exits.put("southEast",southEastExit);
-
+      exits.put(direction,neighbor);
     }
 
     /**
