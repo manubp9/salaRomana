@@ -72,20 +72,9 @@ public class Room
     public String getExitString()
     {
         String description = "";
-        if(getExit("north") != null) {
-            description += "north ";
-        }
-        if(getExit("east") != null) {
-            description +="east ";
-        }
-        if(getExit("south") != null) {
-            description +="south ";
-        }
-        if(getExit("west")!= null) {
-            description += "west ";
-        }
-        if(getExit("southeast") != null) {
-            description +="southeast ";
+        for(String clave: exits.keySet())
+        {
+            description += clave + " "; 
         }
         return description;
     }
