@@ -38,12 +38,18 @@ public class Game
         Room circulo,oeste,este,norte,sur,freedom;
 
         // create the rooms
-        circulo = new Room("sala circular romana con puertas","antorcha apagada",1.5F);
-        oeste = new Room("sala oeste,hay un leon","leon",280f);
-        este = new Room("sala este,con refrigerio","vaso de agua",1f);
-        norte = new Room("sala norte,sala con fuego","piscina de lava para encender antorcha",0.1f);
-        sur = new Room("sala sur , hay una espada","espada larga",3.2f);
-        freedom = new Room("sala libertad,has derrotado al leon y eres LIBRE","espada de madera",1.0f);
+        circulo = new Room("sala circular romana con puertas");
+        circulo.addItem(new Item(" antorcha apagada",1.2f));
+        oeste = new Room("sala oeste,hay un leon");
+        oeste.addItem(new Item(" leon hambriento",250f));
+        este = new Room("sala este,con refrigerio");
+        este.addItem(new Item(" vaso de agua",0.5f));
+        norte = new Room("sala norte,sala con fuego");
+        norte.addItem(new Item(" piscina de lava para encender antorcha",0.1f));
+        sur = new Room("sala sur , hay una espada");
+        sur.addItem(new Item(" espada larga",3.5f));
+        freedom = new Room("sala libertad,has derrotado al leon y eres LIBRE");
+        freedom.addItem(new Item(" espada de madera que representa libertad",1.0f));
 
         // initialise room exits
         circulo.setExit("north",norte);
