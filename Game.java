@@ -138,7 +138,7 @@ public class Game
         System.out.println("around at the university.");
         System.out.println();
         System.out.println("Your command words are:");
-        System.out.println("   go quit help");
+       parser.getCommands().showAll();
     }
 
     /** 
@@ -192,4 +192,5 @@ public class Game
     {
         System.out.println (currentRoom.getLongDescription());
     }
+    
 }
