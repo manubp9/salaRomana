@@ -72,4 +72,12 @@ public class Parser
     {
         return commands;
     }
+    /**
+     * Opción 2. Implementar un método en la clase Parser que consiga imprimir por pantalla todos los comandos 
+     * disponibles e invocarlo desde la clase Game.
+     */
+    public void printCommands()
+    {
+        commands.showAll();
+    }
 }
