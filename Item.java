@@ -33,5 +33,11 @@ public class Item
     {
         return peso;
     }
-    
+    /**
+     * devuelve todos los datos del item
+     */
+    public String toString()
+    {
+        return " nombre "+getNombre()+"\n peso  "+getPeso();
+    }
 }

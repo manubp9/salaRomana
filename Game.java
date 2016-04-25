@@ -19,6 +19,8 @@ public class Game
 {
     private Parser parser;
     private Room currentRoom;
+    private Room backRoom;
+    private int cont;
 
     /**
      * Create the game and initialise its internal map.
@@ -27,6 +29,8 @@ public class Game
     {
         createRooms();
         parser = new Parser();
+        backRoom = null;
+        cont = 0;
     }
 
     /**
@@ -131,10 +135,26 @@ public class Game
             printLocationInfo();
         }
         else if (commandWord.equals("eat")) {
-           System.out.println("You have eaten now and you are not hungry any more");
+            System.out.println("You have eaten now and you are not hungry any more");
+        }
+        else if (commandWord.equals("back")) 
+        {
+            if(backRoom !=null && cont>0 )
+            {
+                currentRoom = backRoom;
+                printLocationInfo();
+                cont = 0;
+            }
+                
+            else
+            {
+                System.out.println("You can't go back");
+
+            }  
         }
 
         return wantToQuit;
+
     }
 
     // implementations of user commands:
@@ -145,6 +165,7 @@ public class Game
      * command words.
      */
     private void printHelp() 
+
     {
         System.out.println("You are lost. You are alone. You wander");
         System.out.println("around at the university.");
@@ -172,12 +193,15 @@ public class Game
         nextRoom = currentRoom.getExit(direction);
         if (nextRoom == null) {
             System.out.println("There is no door!");
+
         }
         else {
+            backRoom = currentRoom;
             currentRoom = nextRoom;
             printLocationInfo();
 
             System.out.println();
+            cont++;
         }
     }
 
