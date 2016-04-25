@@ -1,3 +1,4 @@
+import java.util.Stack;
 /**
  *  This class is the main class of the "World of Zuul" application. 
  *  "World of Zuul" is a very simple, text based adventure game.  Users 
@@ -20,7 +21,8 @@ public class Game
     private Parser parser;
     private Room currentRoom;
     private Room backRoom;
-    private int cont;
+    private Stack<Room> salasAnteriores;
+    private boolean habitacionDisponible;
 
     /**
      * Create the game and initialise its internal map.
@@ -30,7 +32,9 @@ public class Game
         createRooms();
         parser = new Parser();
         backRoom = null;
-        cont = 0;
+
+        habitacionDisponible = false;
+        salasAnteriores = new Stack<Room>();
     }
 
     /**
@@ -126,7 +130,13 @@ public class Game
             printHelp();
         }
         else if (commandWord.equals("go")) {
+            backRoom = currentRoom; 
             goRoom(command);
+            if(backRoom !=currentRoom && habitacionDisponible)
+            {
+                salasAnteriores.push(backRoom);
+
+            }
         }
         else if (commandWord.equals("quit")) {
             wantToQuit = quit(command);
@@ -139,13 +149,14 @@ public class Game
         }
         else if (commandWord.equals("back")) 
         {
-            if(backRoom !=null && cont>0 )
+            if(!salasAnteriores.empty())
             {
-                currentRoom = backRoom;
+
+                currentRoom = salasAnteriores.pop();
                 printLocationInfo();
-                cont = 0;
+
             }
-                
+
             else
             {
                 System.out.println("You can't go back");
@@ -193,7 +204,7 @@ public class Game
         nextRoom = currentRoom.getExit(direction);
         if (nextRoom == null) {
             System.out.println("There is no door!");
-
+            habitacionDisponible = false;
         }
         else {
             backRoom = currentRoom;
@@ -201,7 +212,8 @@ public class Game
             printLocationInfo();
 
             System.out.println();
-            cont++;
+            habitacionDisponible = true;
+
         }
     }
 
