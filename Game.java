@@ -149,15 +149,7 @@ public class Game
         }
         else if (commandWord.equals("back")) 
         {
-            if(!salasAnteriores.empty())
-            {
-                currentRoom = salasAnteriores.pop();
-                printLocationInfo();
-            }
-            else
-            {
-                System.out.println("You can't go back");
-            }
+           
         }
         else if (commandWord.equals("take")) {
             System.out.println("You have eaten now and you are not hungry any more");

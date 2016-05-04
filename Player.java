@@ -77,7 +77,7 @@ public class Player
      */
     public void takeItem(String nombreObjeto)
     {
-        Item objeto = currentRoom.cogerObjeto(nombreObjeto);
+        Item objeto = currentRoom.buscarObjeto(nombreObjeto);
         if(pesoActual<PESOMAX - objeto.getPeso()&&objeto.getCargable())
         {
             mochila.add(objeto);
@@ -149,6 +149,7 @@ public class Player
         else
         {
             System.out.println("You can't go back");
+            printLocationInfo();
         }
     }
 

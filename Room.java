@@ -18,7 +18,6 @@ public class Room
 {
     private String description;
     private HashMap<String,Room> exits;
-
     private ArrayList<Item> objetos;
     /**
      * Create a room described "description". Initially, it has
@@ -87,6 +86,14 @@ public class Room
     public String getLongDescription()
     {
         String descripcion = "Estas en la "+description+ "\n Salidas: "+ getExitString()+"\n Hay un ";
+        if(objetos.size() !=0)
+        {
+            descripcion += "Aqui hay: ";
+        }
+        else
+        {
+            descripcion += "Aqui no hay ningun objeto";
+        }
         for(Item objeto:objetos)
         {
             descripcion += objeto.toString();
@@ -102,4 +109,38 @@ public class Room
     {
         objetos.add(item);
     }
+    /**
+     * coge un objeto de la sala
+     */
+    public Item buscarObjeto(String nombreObjeto)
+    {
+        boolean encontrado = false;
+        Item objeto = null;
+        for(int i =0; i <objetos.size() && !encontrado;i++)
+        {
+            if(objetos.get(i).getNombre().equals(nombreObjeto))
+            {
+                objeto =objetos.get(i);
+                encontrado = true;
+            }
+        }
+        return objeto;
+        
+    }
+    /**
+     * borra un objeto de la sala
+     */
+    public void borrarObjeto(Item item)
+    {
+        boolean encontrado = false;
+        Item objeto = null;
+        for(int i =0; i <objetos.size() && !encontrado;i++)
+        {
+            if(objetos.get(i)== item)
+            {
+                objeto =objetos.remove(i);
+                encontrado = true;
+            }
+        }
+       }
 }
