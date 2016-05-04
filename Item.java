@@ -10,15 +10,25 @@ public class Item
     // instance variables - replace the example below with your own
     private String nombre;
     private float peso;
+    private boolean puedeCargar;
 
     /**
      * Constructor for objects of class Item
      */
-    public Item(String nombre,float peso)
+    public Item(String nombre,float peso,boolean puedeCargar)
     {
         this.nombre = nombre;
+        this.puedeCargar = puedeCargar;
         this.peso = peso;
     }
+
+    /**
+     * devuelve si se puede cargar con ese objeto
+     */
+    public boolean getCargable(){
+        return puedeCargar;
+    }
+
     /**
      * devuelve el nombre del objeto
      */
@@ -26,6 +36,7 @@ public class Item
     {
         return nombre;
     }
+
     /**
      * devuelve el peso del objeto
      */
@@ -33,6 +44,7 @@ public class Item
     {
         return peso;
     }
+
     /**
      * devuelve todos los datos del item
      */

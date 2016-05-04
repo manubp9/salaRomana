@@ -19,22 +19,19 @@ import java.util.Stack;
 public class Game 
 {
     private Parser parser;
-    private Room currentRoom;
-    private Room backRoom;
-    private Stack<Room> salasAnteriores;
-    private boolean habitacionDisponible;
+    private Player player;
 
     /**
      * Create the game and initialise its internal map.
      */
     public Game() 
     {
-        createRooms();
-        parser = new Parser();
-        backRoom = null;
 
-        habitacionDisponible = false;
-        salasAnteriores = new Stack<Room>();
+        parser = new Parser();
+        player = new Player();
+
+        createRooms();
+
     }
 
     /**
@@ -47,17 +44,17 @@ public class Game
 
         // create the rooms
         circulo = new Room("sala circular romana con puertas");
-        circulo.addItem(new Item(" antorcha apagada",1.2f));
+        circulo.addItem(new Item(" antorcha apagada",1.2f,true));
         oeste = new Room("sala oeste,hay un leon");
-        oeste.addItem(new Item(" leon hambriento",250f));
+        oeste.addItem(new Item(" leon hambriento",250f,false));
         este = new Room("sala este,con refrigerio");
-        este.addItem(new Item(" vaso de agua",0.5f));
+        este.addItem(new Item(" vaso de agua",0.5f,true));
         norte = new Room("sala norte,sala con fuego");
-        norte.addItem(new Item(" piscina de lava para encender antorcha",0.1f));
+        norte.addItem(new Item(" piscina de lava para encender antorcha",0.00001f,false));
         sur = new Room("sala sur , hay una espada");
-        sur.addItem(new Item(" espada larga",3.5f));
+        sur.addItem(new Item(" espada larga",3.5f,true));
         freedom = new Room("sala libertad,has derrotado al leon y eres LIBRE");
-        freedom.addItem(new Item(" espada de madera que representa libertad",1.0f));
+        freedom.addItem(new Item(" espada de madera que representa libertad",1.0f,true));
 
         // initialise room exits
         circulo.setExit("north",norte);
@@ -75,7 +72,7 @@ public class Game
 
         sur.setExit( "north",circulo);
 
-        currentRoom = circulo;  // start game outside
+        player.setCurrentRoom(circulo);
     }
 
     /**
@@ -106,7 +103,7 @@ public class Game
         System.out.println("World of Zuul is a new, incredibly boring adventure game.");
         System.out.println("Type 'help' if you need help.");
         System.out.println();
-        printLocationInfo();
+        player.printLocationInfo();
 
         System.out.println();
     }
@@ -130,38 +127,33 @@ public class Game
             printHelp();
         }
         else if (commandWord.equals("go")) {
-            backRoom = currentRoom; 
-            goRoom(command);
-            if(backRoom !=currentRoom && habitacionDisponible)
-            {
-                salasAnteriores.push(backRoom);
 
-            }
+            player.goRoom(command);
+
         }
         else if (commandWord.equals("quit")) {
             wantToQuit = quit(command);
         }
         else if (commandWord.equals("look")) {
-            printLocationInfo();
+            player.printLocationInfo();
         }
         else if (commandWord.equals("eat")) {
             System.out.println("You have eaten now and you are not hungry any more");
         }
         else if (commandWord.equals("back")) 
         {
-            if(!salasAnteriores.empty())
-            {
+            player.volverAtras();
+            
 
-                currentRoom = salasAnteriores.pop();
-                printLocationInfo();
-
-            }
-
-            else
-            {
-                System.out.println("You can't go back");
-
-            }  
+        }
+        else if (commandWord.equals("take")) {
+            player.takeItem(command.getSecondWord());
+        }
+        else if (commandWord.equals("drop")) {
+            player.dropItem(command.getSecondWord());
+        }
+        else if (commandWord.equals("items")) {
+            player.getInventario();
         }
 
         return wantToQuit;
@@ -185,37 +177,6 @@ public class Game
         parser.printCommands();
     }
 
-    /** 
-     * Try to go in one direction. If there is an exit, enter
-     * the new room, otherwise print an error message.
-     */
-    private void goRoom(Command command) 
-    {
-        if(!command.hasSecondWord()) {
-            // if there is no second word, we don't know where to go...
-            System.out.println("Go where?");
-            return;
-        }
-
-        String direction = command.getSecondWord();
-
-        // Try to leave current room.
-        Room nextRoom = null;
-        nextRoom = currentRoom.getExit(direction);
-        if (nextRoom == null) {
-            System.out.println("There is no door!");
-            habitacionDisponible = false;
-        }
-        else {
-            backRoom = currentRoom;
-            currentRoom = nextRoom;
-            printLocationInfo();
-
-            System.out.println();
-            habitacionDisponible = true;
-
-        }
-    }
 
     /** 
      * "Quit" was entered. Check the rest of the command to see
@@ -233,12 +194,5 @@ public class Game
         }
     }
 
-    /**
-     * metodo para evitar la repeticion de codigo
-     */
-    private void printLocationInfo()
-    {
-        System.out.println (currentRoom.getLongDescription());
-    }
 
 }
