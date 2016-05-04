@@ -75,13 +75,52 @@ public class Player
     /**
      * carga un item a la lista
      */
-    public void takeItem(Item objeto)
+    public void takeItem(String nombreObjeto)
     {
-        if(objeto.getPeso()+ getPesoActual() <=PESOMAX){
+        Item objeto = currentRoom.cogerObjeto(nombreObjeto);
+        if(pesoActual<PESOMAX - objeto.getPeso()&&objeto.getCargable())
+        {
             mochila.add(objeto);
+            currentRoom.borrarObjeto(objeto);
+            pesoActual += objeto.getPeso();
         }
-        else{
-            System.out.println("No puedes llevar tanto peso");
+        else 
+        {
+            System.out.println("No puedes llevar ese objeto");
+        }
+    }
+
+    /**
+     * suleta un objeto de la mochila
+     */
+    public void dropItem(String nombreObjeto)
+    {
+        for(int i = 0;i<mochila.size();i++)
+        {
+            if(mochila.get(i).getNombre().equals(nombreObjeto))
+            {
+                currentRoom.addItem(mochila.get(i));
+                pesoActual -=mochila.get(i).getPeso();
+                mochila.remove(i);
+            }
+        }
+    }
+
+    /**
+     * muestra la informacion de los objetos de la mochila
+     */
+    public void getInventario()
+    {
+        if(mochila.size()>0)
+        {
+            for(Item item:mochila)
+            {
+                System.out.println(item.toString()+"\n");
+            }
+        }
+        else
+        {
+            System.out.println("Tu mochila esta vacia");
         }
     }
 
