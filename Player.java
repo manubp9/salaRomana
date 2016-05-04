@@ -59,7 +59,7 @@ public class Player
     /**
      * metodo para evitar la repeticion de codigo
      */
-    private void printLocationInfo()
+    public void printLocationInfo()
     {
         System.out.println (currentRoom.getLongDescription());
     }
