@@ -89,10 +89,10 @@ public class Room
         String descripcion = "Estas en la "+description+ "\n Salidas: "+ getExitString()+"\n Hay un ";
         for(Item objeto:objetos)
         {
-            description += objeto.toString();
+            descripcion += objeto.toString();
 
         }
-        return  description;
+        return  descripcion;
     }
 
     /**

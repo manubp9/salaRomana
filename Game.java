@@ -151,17 +151,22 @@ public class Game
         {
             if(!salasAnteriores.empty())
             {
-
                 currentRoom = salasAnteriores.pop();
                 printLocationInfo();
-
             }
-
             else
             {
                 System.out.println("You can't go back");
-
-            }  
+            }
+        }
+        else if (commandWord.equals("take")) {
+            System.out.println("You have eaten now and you are not hungry any more");
+        }
+        else if (commandWord.equals("drop")) {
+            System.out.println("You have eaten now and you are not hungry any more");
+        }
+        else if (commandWord.equals("items")) {
+            System.out.println("You have eaten now and you are not hungry any more");
         }
 
         return wantToQuit;
@@ -185,37 +190,7 @@ public class Game
         parser.printCommands();
     }
 
-    /** 
-     * Try to go in one direction. If there is an exit, enter
-     * the new room, otherwise print an error message.
-     */
-    private void goRoom(Command command) 
-    {
-        if(!command.hasSecondWord()) {
-            // if there is no second word, we don't know where to go...
-            System.out.println("Go where?");
-            return;
-        }
-
-        String direction = command.getSecondWord();
-
-        // Try to leave current room.
-        Room nextRoom = null;
-        nextRoom = currentRoom.getExit(direction);
-        if (nextRoom == null) {
-            System.out.println("There is no door!");
-            habitacionDisponible = false;
-        }
-        else {
-            backRoom = currentRoom;
-            currentRoom = nextRoom;
-            printLocationInfo();
-
-            System.out.println();
-            habitacionDisponible = true;
-
-        }
-    }
+    
 
     /** 
      * "Quit" was entered. Check the rest of the command to see
@@ -233,12 +208,6 @@ public class Game
         }
     }
 
-    /**
-     * metodo para evitar la repeticion de codigo
-     */
-    private void printLocationInfo()
-    {
-        System.out.println (currentRoom.getLongDescription());
-    }
+    
 
 }
