@@ -44,17 +44,17 @@ public class Game
 
         // create the rooms
         circulo = new Room("sala circular romana con puertas");
-        circulo.addItem(new Item(" antorcha apagada",1.2f,true));
+        circulo.addItem(new Item("antorcha",1.2f,true));
         oeste = new Room("sala oeste,hay un leon");
-        oeste.addItem(new Item(" leon hambriento",250f,false));
+        oeste.addItem(new Item("leon",250f,false));
         este = new Room("sala este,con refrigerio");
-        este.addItem(new Item(" vaso de agua",0.5f,true));
+        este.addItem(new Item("agua",0.5f,true));
         norte = new Room("sala norte,sala con fuego");
-        norte.addItem(new Item(" piscina de lava para encender antorcha",0.00001f,false));
+        norte.addItem(new Item("fuego",0.00001f,false));
         sur = new Room("sala sur , hay una espada");
-        sur.addItem(new Item(" espada larga",3.5f,true));
+        sur.addItem(new Item("espada",3.5f,true));
         freedom = new Room("sala libertad,has derrotado al leon y eres LIBRE");
-        freedom.addItem(new Item(" espada de madera que representa libertad",1.0f,true));
+        freedom.addItem(new Item("espadMadera",1.0f,true));
 
         // initialise room exits
         circulo.setExit("north",norte);

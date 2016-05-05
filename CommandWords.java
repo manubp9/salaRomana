@@ -22,8 +22,8 @@ public class CommandWords
     {
 
         validCommands = new HashMap<String,Option>();
-        validCommands.put("go",Option.GO);
-        validCommands.put("quit",Option.QUIT);
+        validCommands.put("andare",Option.GO);
+        validCommands.put("",Option.QUIT);
         validCommands.put("help",Option.HELP);
         validCommands.put("look",Option.LOOK);
         validCommands.put("eat",Option.EAT);
