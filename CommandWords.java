@@ -22,16 +22,14 @@ public class CommandWords
     {
 
         validCommands = new HashMap<String,Option>();
-        validCommands.put("andare",Option.GO);
-        validCommands.put("smettere",Option.QUIT);
-        validCommands.put("aiuto",Option.HELP);
-        validCommands.put("guarda",Option.LOOK);
-        validCommands.put("mangiare",Option.EAT);
-        validCommands.put("indietro",Option.BACK);
-        validCommands.put("prendere",Option.TAKE);
-        validCommands.put("cadere",Option.DROP);
-        validCommands.put("oggetto",Option.ITEMS);
-        validCommands.put("unknown",Option.UNKNOWN);
+        Option[] option = Option.values();
+        for(int i = 0;i< option.length;i++ )
+        {
+            validCommands.put(option[i].getNombre(),option[i]);
+        }
+        
+        
+        
 
     }
 
