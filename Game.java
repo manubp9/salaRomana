@@ -50,7 +50,7 @@ public class Game
         este = new Room("sala este,con refrigerio");
         este.addItem(new Item("agua",0.5f,true));
         norte = new Room("sala norte,sala con fuego");
-        norte.addItem(new Item("fuego",0.00001f,false));
+        norte.addItem(new Item("fuego",0.00001f,true));
         sur = new Room("sala sur , hay una espada");
         sur.addItem(new Item("espada",3.5f,true));
         freedom = new Room("sala libertad,has derrotado al leon y eres LIBRE");
@@ -101,7 +101,7 @@ public class Game
         System.out.println();
         System.out.println("Welcome to the World of Zuul!");
         System.out.println("World of Zuul is a new, incredibly boring adventure game.");
-        System.out.println("Type 'help' if you need help.");
+        System.out.println("Type 'aiuto' if you need help.");
         System.out.println();
         player.printLocationInfo();
 
@@ -123,45 +123,49 @@ public class Game
         }
 
         Option commandWord = command.getCommandWord();
-        if (commandWord == Option.HELP) {
-            printHelp();
-        }
-        else if (commandWord == Option.GO) {
-
-            player.goRoom(command);
-
-        }
-        else if (commandWord == Option.QUIT) {
-            wantToQuit = quit(command);
-        }
-        else if (commandWord == Option.LOOK){
-            player.printLocationInfo();
-        }
-        else if (commandWord  == Option.EAT) {
-            System.out.println("You have eaten now and you are not hungry any more");
-        }
-        else if (commandWord  == Option.BACK) 
+        switch(commandWord ) 
         {
+            case HELP:
+            printHelp();
+            break;
+
+            case GO: 
+            player.goRoom(command);
+            break;
+
+            case QUIT:
+            wantToQuit = quit(command);
+            break;
+
+            case LOOK:
+            player.printLocationInfo();
+            break;
+
+            case EAT:
+            System.out.println("You have eaten now and you are not hungry any more");
+            break;
+
+            case BACK:
             player.volverAtras();
-            
+            break;
 
-        }
-        else if (commandWord == Option.TAKE) {
+            case TAKE:
             player.takeItem(command.getSecondWord());
-        }
-        else if (commandWord == Option.DROP) {
+            break;
+
+            case DROP:
             player.dropItem(command.getSecondWord());
-        }
-        else if (commandWord  == Option.ITEMS) {
+            break;
+
+            case ITEMS:
             player.getInventario();
+            break;
+
+            
         }
-
         return wantToQuit;
-
-    }
-
+        }
     // implementations of user commands:
-
     /**
      * Print out some help information.
      * Here we print some stupid, cryptic message and a list of the 
@@ -176,7 +180,6 @@ public class Game
         System.out.println("Your command words are:");
         parser.printCommands();
     }
-
 
     /** 
      * "Quit" was entered. Check the rest of the command to see
@@ -193,6 +196,5 @@ public class Game
             return true;  // signal that we want to quit
         }
     }
-
 
 }
