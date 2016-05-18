@@ -44,15 +44,15 @@ public class Game
 
         // create the rooms
         circulo = new Room("sala circular romana con puertas");
-        circulo.addItem(new Item("antorcha",1.2f,true));
+        circulo.addItem(new Item("antorcha",2.0f,true));
         oeste = new Room("sala oeste,hay un leon");
         oeste.addItem(new Item("leon",250f,false));
         este = new Room("sala este,con refrigerio");
         este.addItem(new Item("agua",0.5f,true));
         norte = new Room("sala norte,sala con fuego");
         norte.addItem(new Item("fuego",0.0f,true));
-        sur = new Room("sala sur ,oscura, no se ve nada");
-        sur.addItem(new Item("espada",3.5f,true));
+        sur = new Room("sala sur");
+        sur.addItem(new Item("espada claymore",3.5f,true));
         freedom = new Room("sala libertad,has derrotado al leon y eres LIBRE");
         freedom.addItem(new Item("espadaMadera",1.0f,true));
 

@@ -10,7 +10,7 @@ public class Player
 {
     // instance variables - replace the example below with your own
 
-    public static final float PESOMAX = 8;
+    public static final float PESOMAX = 5;
     private ArrayList<Item> mochila;
     private Room currentRoom;
     private Stack<Room> backRoom;
@@ -61,7 +61,12 @@ public class Player
      */
     public void printLocationInfo()
     {
-        System.out.println (currentRoom.getLongDescription());
+        if (currentRoom.getDescription().contains("sala sur") && !getLuz()){
+            System.out.println("Esta sala está a oscuras, necesitas tener luz para ver lo que hay");          
+        }
+        else{
+            System.out.println (currentRoom.getLongDescription());
+        }
     }
 
     /**
@@ -78,25 +83,31 @@ public class Player
     public void takeItem(String nombreObjeto)
     {
         Item objeto = currentRoom.buscarObjeto(nombreObjeto);
-        if(pesoActual<PESOMAX - objeto.getPeso()&&objeto.getCargable())
-        {
-            if(findItem("antorcha")==true && objeto.getNombre()==("fuego"))
-
+        if(objeto !=null){
+            if(pesoActual<PESOMAX - objeto.getPeso()&&objeto.getCargable())
             {
-                mochila.add(objeto);
-                luz = true;   
-                pesoActual += objeto.getPeso();
-                System.out.println("Has encendido la antorcha, tienes luz");
-                pesoActual += objeto.getPeso();
+                if(findItem("antorcha")==true && objeto.getNombre()==("fuego"))
+
+                {
+                    mochila.add(objeto);
+                    luz = true;   
+                    pesoActual += objeto.getPeso();
+                    System.out.println("Has encendido la antorcha, tienes luz");
+                    pesoActual += objeto.getPeso();
+                }
+                else{
+                    mochila.add(objeto);
+                    currentRoom.borrarObjeto(objeto);
+                    pesoActual += objeto.getPeso();
+                }
+            }else 
+            {
+                System.out.println("No puedes llevar ese objeto");
             }
-            else{
-                mochila.add(objeto);
-                currentRoom.borrarObjeto(objeto);
-                pesoActual += objeto.getPeso();
-            }
-        }else 
+        }
+        else
         {
-            System.out.println("No puedes llevar ese objeto");
+            System.out.println("No hay ningun objeto con ese nombre");
         }
     }
 
