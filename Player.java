@@ -15,6 +15,7 @@ public class Player
     private Room currentRoom;
     private Stack<Room> backRoom;
     private float pesoActual;
+    public boolean luz;
 
     /**
      * Constructor for objects of class Player
@@ -25,6 +26,7 @@ public class Player
         backRoom = new Stack<Room>();
         mochila = new ArrayList<>();
         pesoActual = 0;
+        luz =false;
     }
 
     /** 
@@ -51,8 +53,6 @@ public class Player
             backRoom.push(currentRoom);
             currentRoom = nextRoom;
             printLocationInfo();
-
-            System.out.println();
         }
     }
 
@@ -80,11 +80,21 @@ public class Player
         Item objeto = currentRoom.buscarObjeto(nombreObjeto);
         if(pesoActual<PESOMAX - objeto.getPeso()&&objeto.getCargable())
         {
-            mochila.add(objeto);
-            currentRoom.borrarObjeto(objeto);
-            pesoActual += objeto.getPeso();
-        }
-        else 
+            if(findItem("antorcha")==true && objeto.getNombre()==("fuego"))
+
+            {
+                mochila.add(objeto);
+                luz = true;   
+                pesoActual += objeto.getPeso();
+                System.out.println("Has encendido la antorcha, tienes luz");
+                pesoActual += objeto.getPeso();
+            }
+            else{
+                mochila.add(objeto);
+                currentRoom.borrarObjeto(objeto);
+                pesoActual += objeto.getPeso();
+            }
+        }else 
         {
             System.out.println("No puedes llevar ese objeto");
         }
@@ -102,8 +112,26 @@ public class Player
                 currentRoom.addItem(mochila.get(i));
                 pesoActual -=mochila.get(i).getPeso();
                 mochila.remove(i);
+
             }
         }
+    }
+
+    /**
+     * busca un objeto de la mochila
+     */
+    public boolean findItem(String nombreObjeto)
+    {
+        boolean encontrado = false;
+        for(int i = 0;i<mochila.size();i++)
+        {
+            if(mochila.get(i).getNombre().equals(nombreObjeto))
+            {
+                encontrado = true;
+            }
+        }
+        return encontrado;
+
     }
 
     /**
@@ -151,6 +179,15 @@ public class Player
             System.out.println("You can't go back");
             printLocationInfo();
         }
+    }
+
+    /**
+     * devuelve si la antorcha esta encendida y puedes alumbrar la sala
+     */
+
+    public boolean getLuz()
+    {
+        return luz;
     }
 
     /**

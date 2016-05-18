@@ -23,7 +23,7 @@ public enum Option
 
     TAKE("take"), 
 
-    DROP("take"), 
+    DROP("drop"), 
 
     ITEMS("items"), 
 

@@ -19,6 +19,7 @@ public class Room
     private String description;
     private HashMap<String,Room> exits;
     private ArrayList<Item> objetos;
+    
     /**
      * Create a room described "description". Initially, it has
      * no exits. "description" is something like "a kitchen" or
@@ -30,6 +31,7 @@ public class Room
         this.description = description;
         exits = new HashMap<>();
         objetos = new ArrayList<>();
+
     }
 
     /**
@@ -85,20 +87,22 @@ public class Room
      */
     public String getLongDescription()
     {
-        String descripcion = "Estas en la "+description+ "\n Salidas: "+ getExitString()+"\n Hay un ";
-        if(objetos.size() !=0)
-        {
-            descripcion += "Aqui hay: ";
-        }
-        else
-        {
-            descripcion += "Aqui no hay ningun objeto";
-        }
-        for(Item objeto:objetos)
-        {
-            descripcion += objeto.toString();
+        
+            String descripcion = "Estas en la "+description+ "\n Salidas: "+ getExitString() ;
+            if(objetos.size() !=0)
+            {
+                descripcion += "Aqui hay: ";
+            }
+            else
+            {
+                descripcion += "Aqui no hay ningun objeto";
+            }
+            for(Item objeto:objetos)
+            {
+                descripcion += objeto.toString();
 
-        }
+            }
+        
         return  descripcion;
     }
 
@@ -109,6 +113,7 @@ public class Room
     {
         objetos.add(item);
     }
+
     /**
      * coge un objeto de la sala
      */
@@ -125,8 +130,9 @@ public class Room
             }
         }
         return objeto;
-        
+
     }
+
     /**
      * borra un objeto de la sala
      */
@@ -142,5 +148,5 @@ public class Room
                 encontrado = true;
             }
         }
-       }
+    }
 }

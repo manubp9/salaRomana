@@ -50,11 +50,11 @@ public class Game
         este = new Room("sala este,con refrigerio");
         este.addItem(new Item("agua",0.5f,true));
         norte = new Room("sala norte,sala con fuego");
-        norte.addItem(new Item("fuego",0.00001f,true));
-        sur = new Room("sala sur , hay una espada");
+        norte.addItem(new Item("fuego",0.0f,true));
+        sur = new Room("sala sur ,oscura, no se ve nada");
         sur.addItem(new Item("espada",3.5f,true));
         freedom = new Room("sala libertad,has derrotado al leon y eres LIBRE");
-        freedom.addItem(new Item("espadMadera",1.0f,true));
+        freedom.addItem(new Item("espadaMadera",1.0f,true));
 
         // initialise room exits
         circulo.setExit("north",norte);
@@ -161,10 +161,9 @@ public class Game
             player.getInventario();
             break;
 
-            
         }
         return wantToQuit;
-        }
+    }
     // implementations of user commands:
     /**
      * Print out some help information.

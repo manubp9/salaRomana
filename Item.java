@@ -11,6 +11,7 @@ public class Item
     private String nombre;
     private float peso;
     private boolean puedeCargar;
+    private boolean encendido;
 
     /**
      * Constructor for objects of class Item
@@ -20,6 +21,7 @@ public class Item
         this.nombre = nombre;
         this.puedeCargar = puedeCargar;
         this.peso = peso;
+        encendido = false;
     }
 
     /**
