@@ -1,5 +1,7 @@
 import java.util.ArrayList;
 import java.util.Stack;
+import java.util.Random;
+
 /**
  * Write a description of class Player here.
  * 
@@ -15,7 +17,9 @@ public class Player
     private Room currentRoom;
     private Stack<Room> backRoom;
     private float pesoActual;
-    public boolean luz;
+    private boolean luz;
+    private boolean vivo;
+    private boolean libre;
 
     /**
      * Constructor for objects of class Player
@@ -27,6 +31,8 @@ public class Player
         mochila = new ArrayList<>();
         pesoActual = 0;
         luz =false;
+        vivo = true;
+        libre = false;
     }
 
     /** 
@@ -49,10 +55,16 @@ public class Player
         if (nextRoom == null) {
             System.out.println("There is no door!");
         }
+        else if(!getLibertad() && currentRoom.getDescription().contains("oeste")&& direction.equals("west"))
+        {
+             System.out.println("Esta puerta esta cerrada hasta hasta  que no demuestres la muerte de la bestia");
+             
+        }
         else {
             backRoom.push(currentRoom);
             currentRoom = nextRoom;
             printLocationInfo();
+
         }
     }
 
@@ -213,4 +225,52 @@ public class Player
         }
         return pesoCarga;
     }
+
+    /**
+     * metodo para moverse de forma aleatoria por las salas del juego
+     */
+    public void moveRandom()
+    {
+        Random rnd = new Random();
+        String[] salidas = currentRoom.getExitString().split(" ") ;   
+        setCurrentRoom(currentRoom.getExit(salidas[rnd.nextInt(salidas.length)]));
+
+    }
+
+    /**
+     * devuelve la habitacion actual
+     */
+    public Room getCurrentRoom()
+    {
+        return currentRoom;
+    }
+
+    /**
+     * devuelve si el jugador esta vivo o no
+     */
+    public boolean getVivo()
+    {
+        return vivo;
+    }
+    /**
+     * cambia el valor de vivo
+     */
+    public void setVivo()
+    {
+        vivo = !vivo;
+    }
+    /**
+     * devuelve si puedes tener acceso a la libertad
+     */
+    public boolean getLibertad()
+    {
+        if(findItem("colmillo"))
+        {
+            libre = true;
+        }
+        return libre;
+    }
+    
+    
+
 }

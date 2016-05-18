@@ -20,18 +20,17 @@ public class Game
 {
     private Parser parser;
     private Player player;
+    private Player lion;
 
     /**
      * Create the game and initialise its internal map.
      */
     public Game() 
     {
-
         parser = new Parser();
         player = new Player();
-
+        lion = new Player();
         createRooms();
-
     }
 
     /**
@@ -45,34 +44,39 @@ public class Game
         // create the rooms
         circulo = new Room("sala circular romana con puertas");
         circulo.addItem(new Item("antorcha",2.0f,true));
-        oeste = new Room("sala oeste,hay un leon");
-        oeste.addItem(new Item("leon",250f,false));
+        oeste = new Room("sala oeste,hay una sillica pa sentarse uno");
+        oeste.addItem(new Item("silla",20.0f,false));
         este = new Room("sala este,con refrigerio");
         este.addItem(new Item("agua",0.5f,true));
         norte = new Room("sala norte,sala con fuego");
         norte.addItem(new Item("fuego",0.0f,true));
         sur = new Room("sala sur");
-        sur.addItem(new Item("espada claymore",3.5f,true));
-        freedom = new Room("sala libertad,has derrotado al leon y eres LIBRE");
-        freedom.addItem(new Item("espadaMadera",1.0f,true));
-
+        sur.addItem(new Item("espadon",3.5f,true));
+        sur.addItem(new Item("colmillo",0.1f,true));
+        freedom = new Room("sala libertad");
+        
         // initialise room exits
         circulo.setExit("north",norte);
         circulo.setExit("east",este);
         circulo.setExit("south",sur);
         circulo.setExit("west",oeste);
 
-        oeste.setExit("west",circulo);
-        oeste.setExit("southeast",freedom);
-        oeste.setExit("south",sur);
+        oeste.setExit("east",circulo);
+        oeste.setExit("southeast",sur);
+        oeste.setExit("west",freedom);
 
         este.setExit("west",circulo);
 
         norte.setExit("south",circulo);
 
         sur.setExit( "north",circulo);
+        sur.setExit("northwest",oeste);
+        
+        freedom.setExit("east",oeste);
 
         player.setCurrentRoom(circulo);
+        lion.setCurrentRoom(sur);
+        lion.takeItem("colmillo");
     }
 
     /**
@@ -86,9 +90,21 @@ public class Game
         // execute them until the game is over.
 
         boolean finished = false;
-        while (! finished) {
+        while (!finished && player.getVivo()|| !finished && !player.getCurrentRoom().getDescription().equals("freedom")) {
             Command command = parser.getCommand();
             finished = processCommand(command);
+            System.out.println(lion.getCurrentRoom().getDescription());
+
+            if(player.getCurrentRoom().getDescription().contains("libertad"))
+            {
+                finished = true;
+                System.out.println("Te has ganado la libertad");
+                
+            }
+        }
+        if(!player.getVivo())
+        {
+            System.out.println("Estas muerto");
         }
         System.out.println("Thank you for playing.  Good bye.");
     }
@@ -131,6 +147,31 @@ public class Game
 
             case GO: 
             player.goRoom(command);
+            if(lion.getVivo())
+            {
+                lion.moveRandom();
+            }
+            if(player.getCurrentRoom() == lion.getCurrentRoom())
+            {
+                System.out.println("Un leon salvaje apareció");
+                if(player.findItem("espadon"))
+                {
+                    System.out.println("Has derrotado al leon,la sala de la libertad esta abierta\n");
+                    System.out.println("corre hacia tu libertad");
+                    lion.setVivo();
+                    lion.dropItem("colmillo");
+                    player.takeItem("colmillo");
+                    System.out.println("Has cogido el colmillo que demuestra que has matado al leon");
+
+                }
+                else
+                {
+                    player.setVivo();
+                    System.out.println("Sin armas no puedes derrotar a un leon,estas muerto");
+
+                }
+
+            }
             break;
 
             case QUIT:
@@ -147,6 +188,8 @@ public class Game
 
             case BACK:
             player.volverAtras();
+            lion.moveRandom();
+
             break;
 
             case TAKE:
