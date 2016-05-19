@@ -52,6 +52,6 @@ public class Item
      */
     public String toString()
     {
-        return " nombre "+getNombre()+"\n peso  "+getPeso();
+        return getNombre()+" que pesa  "+getPeso()+"kg`s";
     }
 }

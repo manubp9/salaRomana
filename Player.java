@@ -17,9 +17,9 @@ public class Player
     private Room currentRoom;
     private Stack<Room> backRoom;
     private float pesoActual;
-    private boolean luz;
-    private boolean vivo;
-    private boolean libre;
+    private boolean luz;//representa si se ha encendido la antorcha o no
+    private boolean vivo;//estado del objeto player, vivo o muerto
+    private boolean libre;//representa la capacidad del jugador para poder completar el juego al matar al leon
 
     /**
      * Constructor for objects of class Player
@@ -43,6 +43,7 @@ public class Player
     {
         if(!command.hasSecondWord()) {
             // if there is no second word, we don't know where to go...
+            System.out.println("บบบบบบบบบ");
             System.out.println("Go where?");
             return;
         }
@@ -53,12 +54,14 @@ public class Player
         Room nextRoom = null;
         nextRoom = currentRoom.getExit(direction);
         if (nextRoom == null) {
+            System.out.println("บบบบบบบบบบบบบบบบบ");
             System.out.println("There is no door!");
         }
         else if(!getLibertad() && currentRoom.getDescription().contains("oeste")&& direction.equals("west"))
         {
-             System.out.println("Esta puerta esta cerrada hasta hasta  que no demuestres la muerte de la bestia");
-             
+            System.out.println("บบบบบบบบบบบบบบบบบบบบบบบบบบบบบบบบบบบบบบบบบบบบบบบบบบบบบบบบบบบบบบบบบบบบบบบบบบบบบ");
+            System.out.println("Esta puerta esta cerrada hasta hasta  que no demuestres la muerte de la bestia");
+
         }
         else {
             backRoom.push(currentRoom);
@@ -74,9 +77,11 @@ public class Player
     public void printLocationInfo()
     {
         if (currentRoom.getDescription().contains("sala sur") && !getLuz()){
+            System.out.println("บบบบบบบบบบบบบบบบบบบบบบบบบบบบบบบบบบบบบบบบบบบบบบบบบบบบบบบบบบบบบบบบ");
             System.out.println("Esta sala estแ a oscuras, necesitas tener luz para ver lo que hay");          
         }
         else{
+            System.out.println("บบบบบบบบบบบบบบบบบบบบบบบบบบบบบบบบบบบบบบบบบบบ");
             System.out.println (currentRoom.getLongDescription());
         }
     }
@@ -98,27 +103,36 @@ public class Player
         if(objeto !=null){
             if(pesoActual<PESOMAX - objeto.getPeso()&&objeto.getCargable())
             {
-                if(findItem("antorcha")==true && objeto.getNombre()==("fuego"))
+                if(findItem("antorcha") && objeto.getNombre().equals("fuego"))
 
                 {
                     mochila.add(objeto);
                     luz = true;   
                     pesoActual += objeto.getPeso();
+                    System.out.println("บบบบบบบบบบบบบบบบบบบบบบบบบบบบบบบบบบบบบ");
                     System.out.println("Has encendido la antorcha, tienes luz");
                     pesoActual += objeto.getPeso();
                 }
-                else{
+                else if(!findItem("antorcha")&& objeto.getNombre().equals("fuego"))
+                {
+                    System.out.println("บบบบบบบบบบบบบบบบบบบบบบบบบบบบบบบบบบบ");
+                    System.out.println("No tienes con que encender un fuego");
+                }
+                else
+                {
                     mochila.add(objeto);
                     currentRoom.borrarObjeto(objeto);
                     pesoActual += objeto.getPeso();
                 }
             }else 
             {
+                System.out.println("บบบบบบบบบบบบบบบบบบบบบบบบบบบ");
                 System.out.println("No puedes llevar ese objeto");
             }
         }
         else
         {
+            System.out.println("บบบบบบบบบบบบบบบบบบบบบบบบบบบบบบบบบบบ");
             System.out.println("No hay ningun objeto con ese nombre");
         }
     }
@@ -171,6 +185,7 @@ public class Player
         }
         else
         {
+            System.out.println("บบบบบบบบบบบบบบบบบบบบ");
             System.out.println("Tu mochila esta vacia");
         }
     }
@@ -199,6 +214,7 @@ public class Player
         }
         else
         {
+            System.out.println("บบบบบบบบบบบบบบบบบ");
             System.out.println("You can't go back");
             printLocationInfo();
         }
@@ -252,6 +268,7 @@ public class Player
     {
         return vivo;
     }
+
     /**
      * cambia el valor de vivo
      */
@@ -259,8 +276,9 @@ public class Player
     {
         vivo = !vivo;
     }
+
     /**
-     * devuelve si puedes tener acceso a la libertad
+     * devuelve si puedes tener acceso a la libertad, al matar al leon 
      */
     public boolean getLibertad()
     {
@@ -270,7 +288,5 @@ public class Player
         }
         return libre;
     }
-    
-    
 
 }

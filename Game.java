@@ -52,9 +52,9 @@ public class Game
         norte.addItem(new Item("fuego",0.0f,true));
         sur = new Room("sala sur");
         sur.addItem(new Item("espadon",3.5f,true));
-        sur.addItem(new Item("colmillo",0.1f,true));
-        freedom = new Room("sala libertad");
-        
+        sur.addItem(new Item("colmillo",0.1f,true));//colmillo que se le a๑ade al leon en la sala en la que empieza sus movimientos
+        freedom = new Room("sala libertad");//solo se abre si consifกgues matar al leon y coger su colmillo
+
         // initialise room exits
         circulo.setExit("north",norte);
         circulo.setExit("east",este);
@@ -71,7 +71,7 @@ public class Game
 
         sur.setExit( "north",circulo);
         sur.setExit("northwest",oeste);
-        
+
         freedom.setExit("east",oeste);
 
         player.setCurrentRoom(circulo);
@@ -85,27 +85,23 @@ public class Game
     public void play() 
     {            
         printWelcome();
-
-        // Enter the main command loop.  Here we repeatedly read commands and
-        // execute them until the game is over.
-
         boolean finished = false;
         while (!finished && player.getVivo()|| !finished && !player.getCurrentRoom().getDescription().equals("freedom")) {
             Command command = parser.getCommand();
             finished = processCommand(command);
-            System.out.println(lion.getCurrentRoom().getDescription());
-
-            if(player.getCurrentRoom().getDescription().contains("libertad"))
+            if(!player.getVivo())
+            {
+                System.out.println("บบบบบบบบบบบบ");
+                System.out.println("Estas muerto");
+            }
+            if(player.getCurrentRoom().getDescription().contains("libertad") || !player.getVivo())
             {
                 finished = true;
-                System.out.println("Te has ganado la libertad");
-                
+                System.out.println("บบบบบบบบบบบบบ");
+                System.out.println("Fin del juego");
             }
         }
-        if(!player.getVivo())
-        {
-            System.out.println("Estas muerto");
-        }
+        System.out.println("บบบบบบบบบบบบบบบบบบบบบบบบบบบบบบบบบ");
         System.out.println("Thank you for playing.  Good bye.");
     }
 
@@ -114,13 +110,12 @@ public class Game
      */
     private void printWelcome()
     {
-        System.out.println();
+        System.out.println("บบบบบบบบบบบบบบบบบบบบบบบบบบบบบ");
         System.out.println("Welcome to the World of Zuul!");
         System.out.println("World of Zuul is a new, incredibly boring adventure game.");
         System.out.println("Type 'aiuto' if you need help.");
-        System.out.println();
+        System.out.println("บบบบบบบบบบบบบบบบบบบบบบบบบบบบบบ");
         player.printLocationInfo();
-
         System.out.println();
     }
 
@@ -134,6 +129,7 @@ public class Game
         boolean wantToQuit = false;
 
         if(command.isUnknown()) {
+            System.out.println("บบบบบบบบบบบบบบบบบบบบบบบบบบบบ");
             System.out.println("I don't know what you mean...");
             return false;
         }
@@ -153,20 +149,24 @@ public class Game
             }
             if(player.getCurrentRoom() == lion.getCurrentRoom())
             {
-                System.out.println("Un leon salvaje apareci๓");
+                System.out.println("บบบบบบบบบบบบบบบบบบบบบบบบบบบบบบบบบบบบบบบบบบบ");
+                System.out.println("Un leon salvaje sediento de sangre apareci๓");
                 if(player.findItem("espadon"))
                 {
-                    System.out.println("Has derrotado al leon,la sala de la libertad esta abierta\n");
-                    System.out.println("corre hacia tu libertad");
+                    System.out.println("บบบบบบบบบบบบบบบบบบบบบบบบบบบบบบบบบบบบบบบบบบบบบบบบบบบบบบบบบบบบบบบบบบบบบบบ");
+                    System.out.println("Has derrotado al leon con tu espada,la sala de la libertad esta abierta");
                     lion.setVivo();
                     lion.dropItem("colmillo");
                     player.takeItem("colmillo");
+                    System.out.println("บบบบบบบบบบบบบบบบบบบบบบบบบบบบบบบบบบบบบบบบบบบบบบบบบบบบบบบบบบบ");
                     System.out.println("Has cogido el colmillo que demuestra que has matado al leon");
+                    System.out.println("Corre hacia tu libertad");
 
                 }
                 else
                 {
                     player.setVivo();
+                    System.out.println("บบบบบบบบบบบบบบบบบบบบบบบบบบบบบบบบบบบบบบบบบบบบบบบบบบบ");
                     System.out.println("Sin armas no puedes derrotar a un leon,estas muerto");
 
                 }
@@ -183,6 +183,7 @@ public class Game
             break;
 
             case EAT:
+            System.out.println("บบบบบบบบบบบบบบบบบบบบบบบบบบบบบบบบบบบบบบบบบบบบบบบบบบ");
             System.out.println("You have eaten now and you are not hungry any more");
             break;
 
@@ -216,6 +217,7 @@ public class Game
     private void printHelp() 
 
     {
+        System.out.println("บบบบบบบบบบบบบบบบบบบบบบบบบบบบบบบบบบบบบบบ");
         System.out.println("You are lost. You are alone. You wander");
         System.out.println("around at the university.");
         System.out.println();
@@ -231,6 +233,7 @@ public class Game
     private boolean quit(Command command) 
     {
         if(command.hasSecondWord()) {
+            System.out.println("บบบบบบบบบบ");
             System.out.println("Quit what?");
             return false;
         }
